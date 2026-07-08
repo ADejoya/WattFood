@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wattfood/carousel_widget.dart';
+import 'package:wattfood/add_recipe_sheet.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -12,34 +13,32 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
       appBar: AppBar(
+        title: const Text('Wattfood'),
         centerTitle: true,
-        backgroundColor: const Color.fromARGB(255, 220, 137, 20),
-        title: const Text('WattFood'),
+        backgroundColor: const Color.fromARGB(255, 200, 185, 51),
         titleTextStyle: const TextStyle(
-          fontSize: 24.0,
+          fontSize: 24,
           fontWeight: FontWeight.bold,
-          color: Colors.black,
-                ),
-              ),// appbar styling
-                  body: Column(
-                  children: [
-          const SizedBox(height: 16),
-          FoodCarousel(),//sliding pictures home
-          const SizedBox(height: 16),
-          
-          TextButton(
-            onPressed: () {},
-            child: const Text(
-              'Forgot Password?',
-              style: TextStyle(
-              color: Color.fromARGB(217, 255, 0, 0),
-              ),
-            ),
-          ),
-        ],
+          color: Colors.black
+        ),
       ),
+      body: const Align(
+        alignment:  Alignment.topLeft,
+        child: Padding(padding: EdgeInsetsGeometry.all(16.0),
+        child: Text('Welcome to your recipe app',
+        style: TextStyle(fontSize: 18,),
+          ),
+        ),
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: (){
+          showModalBottomSheet(context: context, isScrollControlled: true, builder: (context) => const AddRecipeSheet(),
+          );
+        },
+        child: const Icon(Icons.add),
+      )
+         
     );
   }
 }

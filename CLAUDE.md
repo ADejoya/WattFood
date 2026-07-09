@@ -6,11 +6,15 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 WattFood is a Flutter app being rebuilt from scratch, step by step, as a learning project. The user is a Flutter/Dart beginner. Prefer showing code in chat over editing files directly, unless explicitly asked to edit a file.
 
+WattFood app that lets user add photos, add name of the food, add ingridients and save their recipes.
+
 ## Conventions
 
 - Always use Flutter Material Design (`import 'package:flutter/material.dart';`) for widgets — not Cupertino or other design systems.
 
 - Always help the user show intructions in doing the task.
+
+- Make the app inspired by the UI/UX of reminders app from IOS iPhone.
 
 
 ## Commands

@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:wattfood/app_colors.dart';
 import 'package:wattfood/homescreen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -15,7 +18,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
+      backgroundColor: AppColors.cream,
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 35.0),
@@ -29,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 style: TextStyle(
                   fontSize: 32.0,
                   fontWeight: FontWeight.bold,
-                  color: Color.fromARGB(255, 0, 0, 0),
+                  color: AppColors.darkText,
                 ),
               ),
               const SizedBox(height: 40),
@@ -64,8 +67,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color.fromARGB(217, 207, 133, 21),
-                    foregroundColor: Colors.white,
+                    backgroundColor: AppColors.accent,
+                    foregroundColor: AppColors.cream,
                     padding: const EdgeInsets.symmetric(vertical: 16),
                   ),
                   child: const Text('Login'),

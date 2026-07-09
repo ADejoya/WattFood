@@ -1,6 +1,9 @@
 # wattfood
 
-A new Flutter project.
+A Flutter project where you can add and save your food recipes for future uses.
+
+In this app I manage to learn Github and explore Claude this is my first AI assisted mobile development
+
 
 ## Getting Started
 

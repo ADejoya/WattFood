@@ -16,7 +16,10 @@ class AddRecipeSheet extends StatefulWidget{
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _ingredientsController = TextEditingController();
   String? _pickedImagePath;
+  final List<TextEditingController> _stepControllers = [TextEditingController()];
+  final List<bool> _stepChecked = [false];
 
+// for image picker
   Future<void> _pickImage() async {
     final picker = ImagePicker();
     final image = await picker.pickImage(source: ImageSource.gallery);
@@ -26,13 +29,40 @@ class AddRecipeSheet extends StatefulWidget{
       });
     }
   }
+//for cooking steps
+  void _addStep() {
+  setState(() {
+    _stepControllers.add(TextEditingController());
+    _stepChecked.add(false);
+  });
+}
+//removing step
+void _removeStep(int index) {
+  setState(() {
+    _stepControllers[index].dispose();
+    _stepControllers.removeAt(index);
+    _stepChecked.removeAt(index);
+  });
+}
+
+@override
+void dispose() {
+  _nameController.dispose();
+  _ingredientsController.dispose();
+  for (final c in _stepControllers) {
+    c.dispose();
+  }
+  super.dispose();
+}
+
 
  @override
 Widget build(BuildContext context) {
   return Padding(
-    padding: const EdgeInsets.all(40.0),
+  padding: const EdgeInsets.all(40.0),
+  child: SingleChildScrollView(
     child: Column(
-      mainAxisSize: MainAxisSize.max,
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Row(
@@ -89,8 +119,49 @@ Widget build(BuildContext context) {
             labelText: 'Ingridients',
             border: OutlineInputBorder()
           ),
-        )
-      ],
+        ),
+        const SizedBox(height: 16,),
+        const Align(
+          alignment: Alignment.centerLeft,
+          child: Text('Steps', style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+          ),
+        const SizedBox(height: 8),
+        Column(
+          children: List.generate(_stepControllers.length, (index) {
+            return Row(
+              children: [
+                Checkbox(
+                  value: _stepChecked[index],
+                  onChanged: (value) {
+                    setState(() {
+                      _stepChecked[index] = value ?? false;
+                    });
+                  },
+                ),
+                Expanded(
+                  child: TextField(
+                    controller: _stepControllers[index],
+                    decoration: InputDecoration(
+                      hintText: 'Step ${index + 1}',
+                      border: InputBorder.none,
+                    ),
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.remove_circle_outline),
+                  onPressed: () => _removeStep(index),
+                ),
+              ],
+            );
+          }),
+        ),
+        TextButton.icon(
+          onPressed: _addStep,
+          icon: const Icon(Icons.add),
+          label: const Text('Add step'),
+        ),
+       ],
+      ),
     ),
   );
 }

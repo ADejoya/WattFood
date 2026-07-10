@@ -59,9 +59,10 @@ void dispose() {
  @override
 Widget build(BuildContext context) {
   return Padding(
-    padding: const EdgeInsets.all(40.0),
+  padding: const EdgeInsets.all(40.0),
+  child: SingleChildScrollView(
     child: Column(
-      mainAxisSize: MainAxisSize.max,
+      mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
         Row(
@@ -159,7 +160,8 @@ Widget build(BuildContext context) {
           icon: const Icon(Icons.add),
           label: const Text('Add step'),
         ),
-      ],
+       ],
+      ),
     ),
   );
 }

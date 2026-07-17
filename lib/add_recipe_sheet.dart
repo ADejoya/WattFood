@@ -2,22 +2,37 @@ import 'package:flutter/material.dart';
 import 'package:wattfood/app_colors.dart';
 import 'dart:io';
 import 'package:image_picker/image_picker.dart';
+import 'package:wattfood/recipe.dart';
 
 
 
 class AddRecipeSheet extends StatefulWidget{
-  const AddRecipeSheet ({super.key});
+  final Recipe? existingRecipe;
+  const AddRecipeSheet ({super.key, this.existingRecipe});
 
   @override
   State<AddRecipeSheet> createState() => _AddRecipeSheetState();
 }
 
   class _AddRecipeSheetState extends State<AddRecipeSheet> {
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _ingredientsController = TextEditingController();
+  late final TextEditingController _nameController;
+  late final TextEditingController _ingredientsController;
   String? _pickedImagePath;
-  final List<TextEditingController> _stepControllers = [TextEditingController()];
-  final List<bool> _stepChecked = [false];
+  late final List<TextEditingController> _stepControllers;
+  late final List<bool> _stepChecked;
+
+  @override
+  void initState() {
+    super.initState();
+    final existing = widget.existingRecipe;
+    _nameController = TextEditingController(text: existing?.name ?? '');
+    _ingredientsController = TextEditingController(text: existing?.ingredients ?? '');
+    _pickedImagePath = existing?.imagePath;
+    _stepControllers = existing != null && existing.steps.isNotEmpty
+        ? existing.steps.map((s) => TextEditingController(text: s)).toList()
+        : [TextEditingController()];
+    _stepChecked = List.generate(_stepControllers.length, (_) => false);
+  }
 
 // for image picker
   Future<void> _pickImage() async {
@@ -77,7 +92,15 @@ Widget build(BuildContext context) {
               style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                final recipe = Recipe(
+                  name: _nameController.text,
+                  ingredients: _ingredientsController.text,
+                  steps: _stepControllers.map((c) => c.text).toList(),
+                  imagePath: _pickedImagePath,
+                );
+                Navigator.pop(context, recipe);
+              },
               icon: const Icon(Icons.check),
             ),
           ],
